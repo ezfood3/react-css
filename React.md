@@ -19,6 +19,7 @@
     - 태그명
     - 선택자1 > 선택자2 (부등호): 자식만
     - 선택자1 선택자2 (공백): 자손까지
+    - 선택자1 + 선택자2 (더하기): 형제, 같은 레벨
   - App.css
 
 2. Sass / Scss
@@ -41,7 +42,7 @@
     - git commit -m"Commit before yarn eject"
   2. react-scripts eject 
   3. config 폴더에 webpack.config.js 오픈
-  4. sassRegex를 검색, 아래 내용 확인
+  4. sassRegex를 검색, 아래 내용 확인 //정규 표현식
 ```js
   {
   test: sassRegex,
@@ -82,3 +83,53 @@
   - https://www.npmjs.com/package/inclued-media
 - 색상 팔레트 정의 : open-color
   - https://www.npmjs.com/package/open-color
+
+3. CSS Module
+- CSS를 불러와서 사용할 때 클래스명을 고유한 값으로 자동 설정
+- 파일명_클래스명_해시값의 형태로 자동 설정됨
+- CSS-loader 에서 해줌
+- 파일명 설정 : 파일명.module.css
+
+- classnames 라이브러리를 사용
+  - 조건부 랜더링 &&
+  - 설치 : yarn add classnames
+  - 사용법 : import classNames from 'classnames';
+  ```js
+  classNames('one', 'two'); // 'one two'
+  classNames('one', { two:true }); // 'one two'
+  classNames('one', { two:false }); // 'one'
+  const myTestCls = 'jit_cls'
+  classNames('one', myTestCls, { myCondition:true }); // 'one jit_cls myCondition'
+  ```
+
+- CSS Module과 classnames의 콜라보
+  - classnames의 bind함수 사용
+  - classname = { styles.클래스이름 } 사용한 형태를
+  - import classNames from "classnames/bind";
+  - const cx = classNames.bind(styles);
+  - cx('클래스명1', '클래스명2', ...);
+
+- CSS Module과 Sass의 콜라보
+  - Sass문법으로 처리
+  - css -> scss로 확장자 변경
+
+4. styles-components
+- React 개발자들이 선호하는 방식
+- 자바스크립트 파일 안에 스타일을 선언하는 방식
+- CSS-in-JS
+- https://github.com/MicheleBertoli/css-in-js
+- 설치 : yarn add styled-components
+- 장점 : 따로 css / scss파일 작성 필요 없음
+- vscode-styled-components 확장 프로그램 설치 후 코딩 추천
+- Tagged 템플릿 리터럴 : 템플릿 문자열 내의 객체와 함수를 원본 그대로 사용
+  - ``: 스타일 작성, 템플릿 문자열
+  - `hello ${{foo: 'bar' }} ${() => 'world' }!`
+    - Object라는 문자열     함수표시되는 문자열
+  function tagged(...args){
+    console.log(args);
+  }
+  tagged`hello ${{foo: 'bar' }} ${() => 'world' }!`;
+
+- 반응형 웹 작성
+  - 미디어 쿼리
+    - @media 처리
